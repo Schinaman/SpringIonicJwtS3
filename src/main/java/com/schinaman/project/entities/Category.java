@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,7 @@ public class Category implements Serializable {
 	private String name;
 	
 	@Getter
+	@JsonManagedReference //do lado que eu quero que venha os objetos associados
 	@ManyToMany (mappedBy = "categories")
 	private List<Product> products = new ArrayList<>();
 

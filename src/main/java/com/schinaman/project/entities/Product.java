@@ -13,7 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,8 +40,9 @@ public class Product implements Serializable{
 	@Setter
 	private Double price;
 	
-	@JsonIgnore
+	
 	@Getter
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "PRODUCT_CATEGORY", 
 				joinColumns = @JoinColumn(name = "produto_id"),

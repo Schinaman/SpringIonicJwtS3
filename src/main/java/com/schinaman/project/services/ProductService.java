@@ -2,13 +2,14 @@ package com.schinaman.project.services;
 
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.schinaman.project.entities.Category;
 import com.schinaman.project.entities.Product;
 import com.schinaman.project.repositories.ProductRepository;
+import com.schinaman.project.services.Exceptions.ObjectNotFoundException;
 
 @Service
 public class ProductService {
