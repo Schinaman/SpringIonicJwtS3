@@ -13,15 +13,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Table (name = "TB_PRODUCT")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Entity
 public class Product implements Serializable{
@@ -30,7 +30,6 @@ public class Product implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Getter
-	@EqualsAndHashCode.Include
 	private Integer id;
 	
 	@Getter
@@ -41,6 +40,7 @@ public class Product implements Serializable{
 	@Setter
 	private Double price;
 	
+	@JsonIgnore
 	@Getter
 	@ManyToMany
 	@JoinTable(name = "PRODUCT_CATEGORY", 

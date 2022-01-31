@@ -1,14 +1,13 @@
 package com.schinaman.project.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -16,35 +15,42 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table (name = "TB_CATEGORY")
+@Table (name="TB_CITY")
+@EqualsAndHashCode (of = "id")
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
 @Entity
-public class Category implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class City implements Serializable {
+	private static final long serialVersionUID = 1945875053099663250L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	@Getter
 	private Integer id;
 	
 	@Getter
 	@Setter
 	private String name;
-	
-	@Getter
-	@ManyToMany (mappedBy = "categories")
-	private List<Product> products = new ArrayList<>();
 
+	@Getter
+	@Setter
+	@ManyToOne
+	@JoinColumn(name="state_id")
+	private State state;
 	
 	
-	
-	public Category(Integer id, String name) {
+	public City(Integer id, String name, State state) {
 		super();
 		this.id = id;
 		this.name = name;
-	} 
-	
+		this.state = state;
+	}
 	
 	
 }
+
+
+
+
+
+
+

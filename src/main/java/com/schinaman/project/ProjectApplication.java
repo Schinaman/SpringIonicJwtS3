@@ -8,18 +8,26 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.schinaman.project.entities.Category;
+import com.schinaman.project.entities.City;
 import com.schinaman.project.entities.Product;
+import com.schinaman.project.entities.State;
 import com.schinaman.project.repositories.CategoryRepository;
+import com.schinaman.project.repositories.CityRepository;
 import com.schinaman.project.repositories.ProductRepository;
+import com.schinaman.project.repositories.StateRepository;
 
 @SpringBootApplication
 public class ProjectApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private CityRepository cityRepository;
+	@Autowired
+	private StateRepository stateRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectApplication.class, args);
@@ -42,8 +50,25 @@ public class ProjectApplication implements CommandLineRunner {
 		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		
+		State state1 = new State(null, "Minas Gerais");
+		State state2 = new State(null, "São Paulo");
+		
+		
+		
+		City city1 = new City(null, "Uberlândia", state1); 
+		City city2 = new City(null, "São Paulo", state2);
+		City city3 = new City(null, "Campinas", state2);
+		
+		state1.getCities().addAll(Arrays.asList(city1));
+		state1.getCities().addAll(Arrays.asList(city2, city3));
+		
+
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		stateRepository.saveAll(Arrays.asList(state1, state2));
+		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		
+		
 		
 	}
 
