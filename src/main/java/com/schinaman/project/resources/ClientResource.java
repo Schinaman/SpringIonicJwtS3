@@ -7,20 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.schinaman.project.entities.Product;
-import com.schinaman.project.services.ProductService;
+import com.schinaman.project.entities.Category;
+import com.schinaman.project.entities.Client;
+import com.schinaman.project.services.ClientService;
 
 
 @RestController
-@RequestMapping(value = "/products")
-public class ProductResource {
+@RequestMapping(value = "/clients")
+public class ClientResource {
 	
 	@Autowired
-	private ProductService service;
+	private ClientService service;
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Product> findById(@PathVariable Integer id){
-		Product obj = service.findById(id);
+	@RequestMapping (value = "/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Client> findById(@PathVariable Integer id){
+		Client obj = service.findById(id);
 		return ResponseEntity.ok(obj);
 	}
 

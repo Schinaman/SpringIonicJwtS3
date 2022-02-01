@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schinaman.project.entities.enums.TypeClient;
 
 import lombok.AccessLevel;
@@ -39,12 +40,14 @@ public class Client implements Serializable {
 	private Integer type; //vai expor dado "TypeClient"
 	
 	
-	//exemplo nelio alves para entidade fraca, não precisa criar repository, solução questionavel, @ElementCollection ;break; @CollectionTable (name = "tb_telefone")
+	//exemplo para entidade fraca, não precisa criar repository, solução questionavel, @ElementCollection ;break; @CollectionTable (name = "tb_telefone")
 	@Setter(AccessLevel.NONE)
+	@JsonManagedReference
 	@OneToMany (mappedBy = "client")
 	private List<Telephone> telephones = new ArrayList<Telephone>();
 	
 	@Setter(AccessLevel.NONE)
+	@JsonManagedReference
 	@OneToMany (mappedBy = "client")
 	private List<Address> addresses = new ArrayList<Address>();
 	
@@ -57,7 +60,7 @@ public class Client implements Serializable {
 		this.type = type.getCode();
 	}
 
-	public TypeClient getType() {
+	public TypeClient getType() { // o get é um tipo "TypeClient" Jpa vai retornar o retorno do GET do atributo type
 		return TypeClient.toEnum(this.type);
 	}
 	

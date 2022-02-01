@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,7 @@ public class State implements Serializable {
 	private String name;
 
 	@Getter
+	@JsonBackReference
 	@OneToMany (mappedBy = "state")
 	private List<City> cities = new ArrayList<City>();
 	

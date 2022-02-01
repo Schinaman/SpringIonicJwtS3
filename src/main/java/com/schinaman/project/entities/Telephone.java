@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,6 +29,7 @@ public class Telephone implements Serializable {
 	@Id
 	private String number;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn (name = "client_id")
 	private Client client;
