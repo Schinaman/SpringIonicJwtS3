@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -54,7 +55,7 @@ public class Product implements Serializable{
 	private List<Category> categories = new ArrayList<>();
 	//nome tabela intermediaria + nome do campo da tabela correspondente ao codigo do produto (fk), + nome da outra chave estrangeira que vai referenciar a categoria (fk2)
 	
-	
+	@JsonIgnore
 	@Setter(AccessLevel.NONE)
 	@OneToMany (mappedBy = "id.product")
 	private Set<ItemOrder> items = new HashSet<>();
@@ -72,7 +73,7 @@ public class Product implements Serializable{
 	}
 
 
-
+	@JsonIgnore
 	public List<Order> getOrders(){
 		List<Order> list = new ArrayList<>();
 		for (ItemOrder x : items) {

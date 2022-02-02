@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.schinaman.project.entities.enums.PaymentState;
 
 import lombok.AccessLevel;
@@ -35,7 +36,7 @@ public abstract class Payment implements Serializable {
 	@Getter (AccessLevel.NONE)
 	private Integer paymentState;
 	
-	
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn (name = "order_id")
 	@MapsId //id do pagamento é o mesmo do pedido

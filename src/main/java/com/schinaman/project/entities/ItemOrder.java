@@ -6,6 +6,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ import lombok.Setter;
 public class ItemOrder implements Serializable{
 	private static final long serialVersionUID = 7935727227544456854L;
 
+	@JsonIgnore
 	@EmbeddedId
 	private ItemOrderPK id = new ItemOrderPK();
 	
@@ -37,6 +40,7 @@ public class ItemOrder implements Serializable{
 	}
 	
 	//acesso direto aos objetos para melhorar a semantica n precisar acessar primeiro o id PK
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}

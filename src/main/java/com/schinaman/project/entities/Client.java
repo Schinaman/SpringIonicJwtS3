@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schinaman.project.entities.enums.TypeClient;
@@ -52,6 +53,7 @@ public class Client implements Serializable {
 	@OneToMany (mappedBy = "client")
 	private List<Address> addresses = new ArrayList<>();
 	
+	@JsonBackReference
 	@Setter(AccessLevel.NONE)
 	@OneToMany (mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
