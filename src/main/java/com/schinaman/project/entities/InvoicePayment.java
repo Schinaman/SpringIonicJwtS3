@@ -3,6 +3,7 @@ package com.schinaman.project.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.schinaman.project.entities.enums.PaymentState;
 
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Table (name = "TB_INVOICE_PAYMENT")
 @Getter
 @Setter
 @NoArgsConstructor

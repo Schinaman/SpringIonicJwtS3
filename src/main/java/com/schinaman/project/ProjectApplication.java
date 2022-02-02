@@ -14,6 +14,7 @@ import com.schinaman.project.entities.Category;
 import com.schinaman.project.entities.City;
 import com.schinaman.project.entities.Client;
 import com.schinaman.project.entities.InvoicePayment;
+import com.schinaman.project.entities.ItemOrder;
 import com.schinaman.project.entities.Order;
 import com.schinaman.project.entities.Payment;
 import com.schinaman.project.entities.Product;
@@ -25,6 +26,7 @@ import com.schinaman.project.repositories.AddressRepository;
 import com.schinaman.project.repositories.CategoryRepository;
 import com.schinaman.project.repositories.CityRepository;
 import com.schinaman.project.repositories.ClientRepository;
+import com.schinaman.project.repositories.ItemOrderRepository;
 import com.schinaman.project.repositories.OrderRepository;
 import com.schinaman.project.repositories.PaymentRepository;
 import com.schinaman.project.repositories.ProductRepository;
@@ -55,7 +57,8 @@ public class ProjectApplication implements CommandLineRunner {
 	@Autowired
 	private PaymentRepository paymentRepository;
 	
-	
+	@Autowired
+	private ItemOrderRepository itemOrderRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectApplication.class, args);
@@ -75,6 +78,7 @@ public class ProjectApplication implements CommandLineRunner {
 		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		
+
 	
 		State state1 = new State(null, "Minas Gerais");
 		State state2 = new State(null, "São Paulo");
@@ -84,12 +88,21 @@ public class ProjectApplication implements CommandLineRunner {
 		state1.getCities().addAll(Arrays.asList(city1));
 		state1.getCities().addAll(Arrays.asList(city2, city3));
 		
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		stateRepository.saveAll(Arrays.asList(state1, state2));
+		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		
 		Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", TypeClient.PESSOAFISICA);
 		Telephone tel1 = new Telephone("27363323", client1); 
 		Telephone tel2 = new Telephone("93838393", client1);
 		Address end1 = new Address(null, "Rua Flores", "300", "apto300", "Jardim","38220834", client1, city1 );
 		Address end2 = new Address(null, "Avenida Matos", "105", "Sala8000", "Centro","38777012", client1, city2);
 
+		clientRepository.saveAll(Arrays.asList(client1));
+		adressRepository.saveAll(Arrays.asList(end1, end2));
+		telephoneRepository.saveAll(Arrays.asList(tel1, tel2));
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), client1, end1);
 		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), client1, end2);
@@ -100,23 +113,24 @@ public class ProjectApplication implements CommandLineRunner {
 		Payment payment2 = new InvoicePayment(null, PaymentState.PENDENTE, order2, sdf.parse("20/10/2017 00:00"), null);
 		order2.setPayment(payment2);
 		
-		client1.getPedidos().addAll(Arrays.asList(order1, order2));
+		client1.getOrders().addAll(Arrays.asList(order1, order2));
 
-		
-		
-		
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3));
-		stateRepository.saveAll(Arrays.asList(state1, state2));
-		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
-		
-		clientRepository.saveAll(Arrays.asList(client1));
-		adressRepository.saveAll(Arrays.asList(end1, end2));
-		telephoneRepository.saveAll(Arrays.asList(tel1, tel2));
-		
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
-	
+		
+		ItemOrder ip1 = new ItemOrder(order1, p1, 0.00, 1, 2000.00);
+		ItemOrder ip2 = new ItemOrder(order1, p3, 0.00, 2, 80.00);
+		ItemOrder ip3 = new ItemOrder(order2, p2, 100.00, 1, 800.00);
+		
+		order1.getItems().addAll(Arrays.asList(ip1, ip2));
+		order2.getItems().addAll(Arrays.asList(ip3));
+		
+		p1.getItems().addAll(Arrays.asList(ip1));
+		p2.getItems().addAll(Arrays.asList(ip3));
+		p3.getItems().addAll(Arrays.asList(ip2));
+		
+		
+		itemOrderRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 
 }

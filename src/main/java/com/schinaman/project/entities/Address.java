@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,7 +36,7 @@ public class Address implements Serializable {
 	private String bairro;
 	private String cep;
 	
-	@JsonBackReference
+	@JsonBackReference //?
 	@ManyToOne
 	@JoinColumn (name = "client_id")
 	private Client client;

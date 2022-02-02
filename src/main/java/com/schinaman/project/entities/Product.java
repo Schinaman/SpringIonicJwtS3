@@ -2,7 +2,9 @@ package com.schinaman.project.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,10 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,6 +54,16 @@ public class Product implements Serializable{
 	private List<Category> categories = new ArrayList<>();
 	//nome tabela intermediaria + nome do campo da tabela correspondente ao codigo do produto (fk), + nome da outra chave estrangeira que vai referenciar a categoria (fk2)
 	
+	
+	@Setter(AccessLevel.NONE)
+	@OneToMany (mappedBy = "id.product")
+	private Set<ItemOrder> items = new HashSet<>();
+	
+	public Set<ItemOrder> getItems() {
+		return items;
+	}
+	
+
 	public Product(Integer id, String name, Double price) {
 		super();
 		this.id = id;
@@ -58,6 +72,14 @@ public class Product implements Serializable{
 	}
 
 
+
+	public List<Order> getOrders(){
+		List<Order> list = new ArrayList<>();
+		for (ItemOrder x : items) {
+			list.add(x.getOrder());
+		}
+		return list;
+	}
 	
 	
 }
