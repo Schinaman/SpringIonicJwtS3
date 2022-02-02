@@ -1,5 +1,6 @@
 package com.schinaman.project;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +9,24 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.schinaman.project.entities.Address;
+import com.schinaman.project.entities.CardPayment;
 import com.schinaman.project.entities.Category;
 import com.schinaman.project.entities.City;
 import com.schinaman.project.entities.Client;
+import com.schinaman.project.entities.InvoicePayment;
+import com.schinaman.project.entities.Order;
+import com.schinaman.project.entities.Payment;
 import com.schinaman.project.entities.Product;
 import com.schinaman.project.entities.State;
 import com.schinaman.project.entities.Telephone;
+import com.schinaman.project.entities.enums.PaymentState;
 import com.schinaman.project.entities.enums.TypeClient;
 import com.schinaman.project.repositories.AddressRepository;
 import com.schinaman.project.repositories.CategoryRepository;
 import com.schinaman.project.repositories.CityRepository;
 import com.schinaman.project.repositories.ClientRepository;
+import com.schinaman.project.repositories.OrderRepository;
+import com.schinaman.project.repositories.PaymentRepository;
 import com.schinaman.project.repositories.ProductRepository;
 import com.schinaman.project.repositories.StateRepository;
 import com.schinaman.project.repositories.TelephoneRepository;
@@ -41,6 +49,12 @@ public class ProjectApplication implements CommandLineRunner {
 	private AddressRepository adressRepository;
 	@Autowired
 	private TelephoneRepository telephoneRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
+	
 	
 	
 	public static void main(String[] args) {
@@ -76,7 +90,18 @@ public class ProjectApplication implements CommandLineRunner {
 		Address end1 = new Address(null, "Rua Flores", "300", "apto300", "Jardim","38220834", client1, city1 );
 		Address end2 = new Address(null, "Avenida Matos", "105", "Sala8000", "Centro","38777012", client1, city2);
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), client1, end1);
+		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), client1, end2);
 		
+		Payment payment1 = new CardPayment(null, PaymentState.QUITADO, order1, 6);
+		order1.setPayment(payment1); // preciso setar depois já que eu tirei do construtor para poder instaciar pedido;
+		
+		Payment payment2 = new InvoicePayment(null, PaymentState.PENDENTE, order2, sdf.parse("20/10/2017 00:00"), null);
+		order2.setPayment(payment2);
+		
+		client1.getPedidos().addAll(Arrays.asList(order1, order2));
+
 		
 		
 		
@@ -89,6 +114,9 @@ public class ProjectApplication implements CommandLineRunner {
 		adressRepository.saveAll(Arrays.asList(end1, end2));
 		telephoneRepository.saveAll(Arrays.asList(tel1, tel2));
 		
+		orderRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
+	
 	}
 
 }

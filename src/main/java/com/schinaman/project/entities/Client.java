@@ -40,7 +40,7 @@ public class Client implements Serializable {
 	private Integer type; //vai expor dado "TypeClient"
 	
 	
-	//exemplo para entidade fraca, não precisa criar repository, solução questionavel, @ElementCollection ;break; @CollectionTable (name = "tb_telefone")
+	//exemplo para entidade fraca, não precisaria criar repository, solução questionavel, @ElementCollection ;break; @CollectionTable (name = "tb_telefone")
 	@Setter(AccessLevel.NONE)
 	@JsonManagedReference
 	@OneToMany (mappedBy = "client")
@@ -50,6 +50,10 @@ public class Client implements Serializable {
 	@JsonManagedReference
 	@OneToMany (mappedBy = "client")
 	private List<Address> addresses = new ArrayList<Address>();
+	
+	@Setter(AccessLevel.NONE)
+	@OneToMany (mappedBy = "client")
+	private List<Order> pedidos = new ArrayList<>();
 	
 	public Client(Integer id, String name, String email, String cpfOuCnpj, TypeClient type) {
 		super();
