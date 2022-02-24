@@ -1,7 +1,7 @@
 package com.schinaman.project.services;
 
+import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,6 +17,10 @@ public class CategoryService {
 	
 	@Autowired
 	private CategoryRepository repo; 
+	
+	public List<Category> findAll(){
+		return repo.findAll();
+	}
 	
 	public Category findById(Integer id) {
 		Optional<Category> obj = repo.findById(id);

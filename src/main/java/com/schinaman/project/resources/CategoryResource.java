@@ -1,6 +1,8 @@
 package com.schinaman.project.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.schinaman.project.dto.CategoryDTO;
 import com.schinaman.project.entities.Category;
 import com.schinaman.project.services.CategoryService;
 
@@ -21,6 +24,13 @@ public class CategoryResource {
 	
 	@Autowired
 	private CategoryService service;
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> findAll(){
+		List<Category> list = service.findAll();
+		List<CategoryDTO> listDto = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDto);
+	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Category> findById(@PathVariable Integer id){
