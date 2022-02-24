@@ -27,6 +27,7 @@ public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Setter
 	@Getter
 	private Integer id;
 	
@@ -34,8 +35,8 @@ public class Category implements Serializable {
 	@Setter
 	private String name;
 	
+	//@JsonManagedReference //do lado que eu quero que venha os objetos associados
 	@Getter
-	@JsonManagedReference //do lado que eu quero que venha os objetos associados
 	@ManyToMany (mappedBy = "categories")
 	private List<Product> products = new ArrayList<>();
 
