@@ -55,6 +55,7 @@ public class Product implements Serializable{
 	private List<Category> categories = new ArrayList<>();
 	//nome tabela intermediaria + nome do campo da tabela correspondente ao codigo do produto (fk), + nome da outra chave estrangeira que vai referenciar a categoria (fk2)
 	
+	//@JsonBackReference //relação manytomany dá problema
 	@JsonIgnore
 	@Setter(AccessLevel.NONE)
 	@OneToMany (mappedBy = "id.product")
