@@ -69,6 +69,11 @@ public class ProjectApplication implements CommandLineRunner {
 
 		Category cat1 = new Category(null, "Informática");
 		Category cat2 = new Category(null, "Escritório");
+		Category cat3 = new Category(null, "Cama mesa e banho");
+		Category cat4 = new Category(null, "Eletronico");
+		Category cat5 = new Category(null, "Jardinagem");
+		Category cat6 = new Category(null, "Decoracao");
+		Category cat7 = new Category(null, "Perfumaria");
 		Product p1 = new Product (null, "Computador" , 2000.00);
 		Product p2 = new Product (null, "Impressora" , 800.00);
 		Product p3 = new Product (null, "Mouse" , 80.00);
@@ -88,7 +93,7 @@ public class ProjectApplication implements CommandLineRunner {
 		state1.getCities().addAll(Arrays.asList(city1));
 		state1.getCities().addAll(Arrays.asList(city2, city3));
 		
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
