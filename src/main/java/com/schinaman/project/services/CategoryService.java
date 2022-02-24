@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.schinaman.project.dto.CategoryDTO;
 import com.schinaman.project.entities.Category;
 import com.schinaman.project.repositories.CategoryRepository;
 import com.schinaman.project.services.Exceptions.DataIntegrityException;
@@ -38,6 +39,10 @@ public class CategoryService {
 	public Category update(Category obj) {
 		findById(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public Category fromDTO (CategoryDTO objDto) {
+		return new Category(objDto.getId(), objDto.getName());
 	}
 	
 	//se tiver produtos atrelados não vou conseguir fazer a deleção; exception, posso decidir em forçar a deleção dos produtos ou lançar uma exceção
