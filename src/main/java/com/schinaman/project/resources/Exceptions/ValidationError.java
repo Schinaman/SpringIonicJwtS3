@@ -1,0 +1,23 @@
+package com.schinaman.project.resources.Exceptions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ValidationError extends StandardError {
+	private static final long serialVersionUID = -4484952679097663729L;
+
+	public ValidationError(Integer status, String msg, Long timeStamp) {
+		super(status, msg, timeStamp);
+	}
+	
+	private List<FieldMessage> errors = new ArrayList<>();
+		
+	public List<FieldMessage> getErrors() {
+		return errors;
+	}
+
+	public void addError(String fieldName, String message) {
+		errors.add(new FieldMessage(fieldName, message));
+	}
+}
