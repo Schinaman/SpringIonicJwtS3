@@ -33,7 +33,6 @@ public class Client implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Setter(AccessLevel.NONE)
 	private Integer id;
 	private String name;
 	private String email;
@@ -64,7 +63,7 @@ public class Client implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.type = type.getCode();
+		this.type = (type==null) ? null : type.getCode() ;
 	}
 
 	public TypeClient getType() { // o get é um tipo "TypeClient" Jpa vai retornar o retorno do GET do atributo type
