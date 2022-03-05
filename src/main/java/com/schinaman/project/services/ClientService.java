@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.schinaman.project.dto.ClientDTO;
-import com.schinaman.project.entities.Category;
 import com.schinaman.project.entities.Client;
 import com.schinaman.project.repositories.ClientRepository;
 import com.schinaman.project.services.Exceptions.DataIntegrityException;

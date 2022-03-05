@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.schinaman.project.dto.CategoryDTO;
 import com.schinaman.project.entities.Category;
+import com.schinaman.project.entities.Client;
 import com.schinaman.project.repositories.CategoryRepository;
 import com.schinaman.project.services.Exceptions.DataIntegrityException;
 import com.schinaman.project.services.Exceptions.ObjectNotFoundException;
@@ -36,9 +37,11 @@ public class CategoryService {
 		return repo.save(obj);
 	}
 	
+
 	public Category update(Category obj) {
-		findById(obj.getId());
-		return repo.save(obj);
+		Category newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public Category fromDTO (CategoryDTO objDto) {
@@ -61,6 +64,8 @@ public class CategoryService {
 		return repo.findAll(pageRequest);
 	}
 	
-	
+	private void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
+	}
 	
 }
