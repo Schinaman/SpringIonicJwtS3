@@ -11,8 +11,15 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.schinaman.project.dto.ClientDTO;
+import com.schinaman.project.dto.ClientNewDTO;
+import com.schinaman.project.entities.Address;
+import com.schinaman.project.entities.City;
 import com.schinaman.project.entities.Client;
+import com.schinaman.project.entities.Telephone;
+import com.schinaman.project.entities.enums.TypeClient;
+import com.schinaman.project.repositories.AddressRepository;
 import com.schinaman.project.repositories.ClientRepository;
+import com.schinaman.project.repositories.TelephoneRepository;
 import com.schinaman.project.services.Exceptions.DataIntegrityException;
 import com.schinaman.project.services.Exceptions.ObjectNotFoundException;
 
@@ -23,6 +30,10 @@ public class ClientService {
 	
 	@Autowired
 	private ClientRepository repo; 
+	@Autowired
+	private AddressRepository addressRepo;
+	@Autowired
+	private TelephoneRepository phoneRepo;
 	
 	public List<Client> findAll(){
 		return repo.findAll();
@@ -40,8 +51,35 @@ public class ClientService {
 		return repo.save(newObj);
 	}
 	
+	public Client insert(Client obj) {
+		obj = repo.save(obj);
+		addressRepo.saveAll(obj.getAddresses());
+		phoneRepo.saveAll(obj.getTelephones());
+		return obj;
+	}
+	
 	public Client fromDTO (ClientDTO objDto) {
 		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+	}
+	
+	public Client fromDTO (ClientNewDTO objDto) {
+		Client cli = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOuCnpj(), TypeClient.toEnum(objDto.getType()));
+		City city = new City(objDto.getCityId(), null, null);
+		Address address = new Address(null, objDto.getLogradouro(), objDto.getNumber(), objDto.getComplement(), objDto.getBairro(), objDto.getCep(), cli, city);
+		cli.getAddresses().add(address);
+		
+		Telephone tel1 = new Telephone(objDto.getTelephone1(), cli);
+		cli.getTelephones().add(tel1);  
+		if (objDto.getTelephone2()!=null) {
+			Telephone tel2 = new Telephone(objDto.getTelephone2(), cli);
+			cli.getTelephones().add(tel2);
+		}
+		if (objDto.getTelephone3()!=null) {
+			Telephone tel3 = new Telephone(objDto.getTelephone3(), cli);
+			cli.getTelephones().add(tel3);
+		}
+		return cli;
+		
 	}
 	
 	//Clientes com Pedido não pode ser deletado, Cliente sem pedido pode
@@ -65,3 +103,4 @@ public class ClientService {
 		newObj.setEmail(obj.getEmail());
 	}
 }
+

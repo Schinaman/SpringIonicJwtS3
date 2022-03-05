@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,8 +23,7 @@ public class ClientDTO implements Serializable{
 	public ClientDTO(Client obj) {
 		id = obj.getId();
 		name = obj.getName();
-		email = obj.getEmail();
-		
+		email = obj.getEmail();	
 	}
 	
 	private Integer id;
