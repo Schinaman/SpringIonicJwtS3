@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,7 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	//@Column(unique=true) // essa anotation do jpa já garante que será uma chave candidata c valor unico, mas ao tentar inserir é o bd que lança a exceção (spring data) e pouco controle sobre a exceção e tratamento
 	private String email;
 	private String cpfOuCnpj;
 	@Getter(AccessLevel.NONE)
