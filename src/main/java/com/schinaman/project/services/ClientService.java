@@ -3,6 +3,8 @@ package com.schinaman.project.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.naming.directory.InvalidAttributesException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -68,6 +70,10 @@ public class ClientService {
 		Address address = new Address(null, objDto.getLogradouro(), objDto.getNumber(), objDto.getComplement(), objDto.getBairro(), objDto.getCep(), cli, city);
 		cli.getAddresses().add(address);
 		
+		if (objDto.getTelephone3()!=null && phoneRepo.findById(objDto.getTelephone1()).isPresent()) throw new IllegalArgumentException("Telefone já existe elemento no banco de dados");
+		if (objDto.getTelephone3()!=null && phoneRepo.findById(objDto.getTelephone2()).isPresent()) throw new IllegalArgumentException("Telefone já existe elemento no banco de dados");
+		if (objDto.getTelephone3()!=null && phoneRepo.findById(objDto.getTelephone3()).isPresent()) throw new IllegalArgumentException("Telefone já existe elemento no banco de dados");
+			
 		Telephone tel1 = new Telephone(objDto.getTelephone1(), cli);
 		cli.getTelephones().add(tel1);  
 		if (objDto.getTelephone2()!=null) {

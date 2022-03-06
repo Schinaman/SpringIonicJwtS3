@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,12 +45,12 @@ public class Client implements Serializable {
 	//exemplo para entidade fraca, não precisaria criar repository, solução questionavel, @ElementCollection ;break; @CollectionTable (name = "tb_telefone")
 	@Setter(AccessLevel.NONE)
 	@JsonManagedReference
-	@OneToMany (mappedBy = "client")
+	@OneToMany (mappedBy = "client", cascade=CascadeType.ALL)
 	private List<Telephone> telephones = new ArrayList<>();
 	
 	@Setter(AccessLevel.NONE)
 	@JsonManagedReference
-	@OneToMany (mappedBy = "client")
+	@OneToMany (mappedBy = "client", cascade=CascadeType.ALL) //permite apagar os endereços relacionados;
 	private List<Address> addresses = new ArrayList<>();
 	
 	@JsonBackReference

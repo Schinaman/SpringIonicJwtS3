@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.schinaman.project.entities.Telephone;
 
 @Repository
-public interface TelephoneRepository extends JpaRepository<Telephone, Telephone>{
+public interface TelephoneRepository extends JpaRepository<Telephone, String>{
 
 }
