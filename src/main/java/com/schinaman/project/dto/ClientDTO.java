@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.schinaman.project.entities.Client;
+import com.schinaman.project.services.validation.ClientUpdate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@ClientUpdate
 public class ClientDTO implements Serializable{
 	private static final long serialVersionUID = -3583627032720001915L;
 
