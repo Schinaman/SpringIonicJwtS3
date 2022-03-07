@@ -21,6 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	
 	//Criando com base Method Names keywords
 	//https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
-	//Page<Product> findDistinctByNameContainingAndCategoriesIn(String name, List<Category> categories, Pageable pageRequest);
+	//Page<Product> findDistinctByNameContainingAndCategoriesIn(String name, List<Category> categories, Pageable pageRequest); //jogar no lugar do search
 	
 }

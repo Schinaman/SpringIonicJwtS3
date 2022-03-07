@@ -34,29 +34,25 @@ import lombok.Setter;
 public class Order implements Serializable {
 	private static final long serialVersionUID = 7860581297555175651L;
 	
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Setter (AccessLevel.NONE)
+		@Id
+		@GeneratedValue (strategy = GenerationType.IDENTITY)
+		@Setter (AccessLevel.NONE)
 	private Integer id;
-	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+		@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
-	
-	@JsonManagedReference
-	@OneToOne (cascade=CascadeType.ALL, mappedBy = "order") //como é o mesmo id cascade all trata trata a transiencia da informação por nao estar salva no bd
+		@JsonManagedReference
+		@OneToOne (cascade=CascadeType.ALL, mappedBy = "order") //como é o mesmo id cascade all trata trata a transiencia da informação por nao estar salva no bd
 	private Payment payment;
-	
-	@JsonManagedReference
-	@ManyToOne
-	@JoinColumn(name = "client_id")
+		@JsonManagedReference
+		@ManyToOne
+		@JoinColumn(name = "client_id")
 	private Client client;
-	
-	@ManyToOne
-	@JoinColumn(name = "addressDelivery_id")
+		@ManyToOne
+		@JoinColumn(name = "addressDelivery_id")
 	private Address addressDelivery;
-	
-	@Setter(AccessLevel.NONE)
-	@OneToMany (mappedBy = "id.order") 
+		
+		@Setter(AccessLevel.NONE)
+		@OneToMany (mappedBy = "id.order") 
 	private Set<ItemOrder> items = new HashSet<>();
 	
 
@@ -68,6 +64,12 @@ public class Order implements Serializable {
 		this.addressDelivery = addressDelivery;
 	}
 	
-	
+	public double getValorTotal() {
+		double soma = 0.0;
+		for (ItemOrder ip : items) {
+			soma = soma + ip.getSubTotal();
+		}
+		return soma;
+	}
 	
 }

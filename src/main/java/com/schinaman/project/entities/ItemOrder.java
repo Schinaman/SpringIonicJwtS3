@@ -39,6 +39,10 @@ public class ItemOrder implements Serializable{
 		this.price = price;
 	}
 	
+	public double getSubTotal() {
+		return (price - discount) * quantity;
+	}
+	
 	//acesso direto aos objetos para melhorar a semantica n precisar acessar primeiro o id PK
 	@JsonIgnore
 	public Order getOrder() {
