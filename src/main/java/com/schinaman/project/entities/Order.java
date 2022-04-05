@@ -36,14 +36,11 @@ public class Order implements Serializable {
 	
 		@Id
 		@GeneratedValue (strategy = GenerationType.IDENTITY)
-		@Setter (AccessLevel.NONE)
 	private Integer id;
 		@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
-		@JsonManagedReference
 		@OneToOne (cascade=CascadeType.ALL, mappedBy = "order") //como é o mesmo id cascade all trata trata a transiencia da informação por nao estar salva no bd
 	private Payment payment;
-		@JsonManagedReference
 		@ManyToOne
 		@JoinColumn(name = "client_id")
 	private Client client;

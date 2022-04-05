@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.schinaman.project.entities.enums.PaymentState;
 
 import lombok.Getter;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class InvoicePayment extends Payment{
 	private static final long serialVersionUID = -7993336783228537348L;
 	

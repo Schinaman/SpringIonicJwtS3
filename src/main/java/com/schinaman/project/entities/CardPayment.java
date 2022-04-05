@@ -3,6 +3,7 @@ package com.schinaman.project.entities;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.schinaman.project.entities.enums.PaymentState;
 
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class CardPayment extends Payment{
 	private static final long serialVersionUID = -2055299287367869144L;
 	

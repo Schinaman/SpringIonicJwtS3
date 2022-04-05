@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.schinaman.project.entities.enums.TypeClient;
@@ -55,7 +53,7 @@ public class Client implements Serializable {
 	@OneToMany (mappedBy = "client", cascade=CascadeType.ALL) //permite apagar os endereços relacionados;
 	private List<Address> addresses = new ArrayList<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@Setter(AccessLevel.NONE)
 	@OneToMany (mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
@@ -73,5 +71,9 @@ public class Client implements Serializable {
 		return TypeClient.toEnum(this.type);
 	}
 	
+
+	public void setType(TypeClient type) {
+		this.type = type.getCode();
+	}
 	
 }

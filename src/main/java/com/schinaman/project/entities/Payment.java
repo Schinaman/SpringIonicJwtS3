@@ -11,7 +11,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.schinaman.project.entities.enums.PaymentState;
 
 import lombok.AccessLevel;
@@ -27,16 +28,17 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 @Entity
 @Inheritance (strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property = "@type") //jackson - serializar e desserealizar os objtos c json; pag
 public abstract class Payment implements Serializable {
 	private static final long serialVersionUID = 8032306653868479057L;
 	
-	@Id
-	@Setter (AccessLevel.NONE)
+	 @Id
+	 @Setter (AccessLevel.NONE)
 	private Integer id; //id do pagamento é o mesmo do pedido
 	@Getter (AccessLevel.NONE)
 	private Integer paymentState;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn (name = "order_id")
 	@MapsId //id do pagamento é o mesmo do pedido
@@ -49,13 +51,12 @@ public abstract class Payment implements Serializable {
 		this.order = order;
 	}
 
-
 	public PaymentState getPaymentState (Integer code) {
 		return PaymentState.toEnum(code);
 	}
 
-	
-	
-	
+	public void setPaymentState (PaymentState paymentState) {
+		this.paymentState = paymentState.getCode();
+	}
 	
 }
