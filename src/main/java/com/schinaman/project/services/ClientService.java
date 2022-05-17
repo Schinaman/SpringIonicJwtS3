@@ -60,6 +60,7 @@ public class ClientService {
 		return obj;
 	}
 	
+	
 	public Client fromDTO (ClientDTO objDto) {
 		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
 	}
