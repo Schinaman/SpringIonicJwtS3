@@ -51,8 +51,8 @@ public abstract class Payment implements Serializable {
 		this.order = order;
 	}
 
-	public PaymentState getPaymentState (Integer code) {
-		return PaymentState.toEnum(code);
+	public PaymentState getPaymentState () {
+		return PaymentState.toEnum(paymentState);
 	}
 
 	public void setPaymentState (PaymentState paymentState) {

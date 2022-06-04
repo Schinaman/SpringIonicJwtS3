@@ -68,6 +68,7 @@ public class OrderService {
 			io.setOder(obj);
 		}
 		itemOrderRepository.saveAll(obj.getItems());
+		System.out.println(obj);
 		return obj;
 	}
 }

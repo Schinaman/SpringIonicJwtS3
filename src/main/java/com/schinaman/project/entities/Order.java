@@ -1,8 +1,11 @@
 package com.schinaman.project.entities;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,7 +20,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -68,5 +70,28 @@ public class Order implements Serializable {
 		}
 		return soma;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número: ");
+		builder.append(getId());
+		builder.append(", INstante: ");
+		builder.append(sdf.format(getInstante()));
+		builder.append(", Cliente: " );
+		builder.append(getClient().getName());
+		builder.append(", Situação do pagamento: ");
+		builder.append(getPayment().getPaymentState().getDescription());
+		builder.append("\nDetalhes:\n");
+		for (ItemOrder io : getItems()) {
+			builder.append(io.toString());
+		}
+		builder.append("Valor total: ");
+		builder.append(nf.format(getValorTotal()));
+		return builder.toString();
+	}
+	
 	
 }
