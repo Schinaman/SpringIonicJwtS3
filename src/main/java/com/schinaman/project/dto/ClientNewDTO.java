@@ -27,8 +27,9 @@ public class ClientNewDTO implements Serializable{ //utilizado para o metodo Ins
 		@NotEmpty(message="Preenchimento obrigatório")
 	private String email;
 	private String cpfOuCnpj; //validação depende do tipo; criar validação customizada da classe
-	private Integer type; 
-	
+	private Integer type;
+		@NotEmpty(message="Preenchimento obrigatório")
+	private String senha;
 		@NotEmpty(message="Preenchimento obrigatório")
 	private String logradouro;
 		@NotEmpty(message="Preenchimento obrigatório")

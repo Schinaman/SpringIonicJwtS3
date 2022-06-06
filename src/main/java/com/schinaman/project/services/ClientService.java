@@ -3,13 +3,12 @@ package com.schinaman.project.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.naming.directory.InvalidAttributesException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.schinaman.project.dto.ClientDTO;
@@ -37,6 +36,10 @@ public class ClientService {
 	@Autowired
 	private TelephoneRepository phoneRepo;
 	
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
+	
 	public List<Client> findAll(){
 		return repo.findAll();
 	}
@@ -62,11 +65,11 @@ public class ClientService {
 	
 	
 	public Client fromDTO (ClientDTO objDto) {
-		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+		return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null, null);
 	}
 	
 	public Client fromDTO (ClientNewDTO objDto) {
-		Client cli = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOuCnpj(), TypeClient.toEnum(objDto.getType()));
+		Client cli = new Client(null, objDto.getName(), objDto.getEmail(), objDto.getCpfOuCnpj(), TypeClient.toEnum(objDto.getType()), pe.encode(objDto.getSenha()));
 		City city = new City(objDto.getCityId(), null, null);
 		Address address = new Address(null, objDto.getLogradouro(), objDto.getNumber(), objDto.getComplement(), objDto.getBairro(), objDto.getCep(), cli, city);
 		cli.getAddresses().add(address);
