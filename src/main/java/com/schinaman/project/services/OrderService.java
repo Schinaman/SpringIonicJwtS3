@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.schinaman.project.entities.Client;
 import com.schinaman.project.entities.InvoicePayment;
 import com.schinaman.project.entities.ItemOrder;
 import com.schinaman.project.entities.Order;
@@ -14,6 +18,8 @@ import com.schinaman.project.repositories.ItemOrderRepository;
 import com.schinaman.project.repositories.OrderRepository;
 import com.schinaman.project.repositories.PaymentRepository;
 import com.schinaman.project.repositories.ProductRepository;
+import com.schinaman.project.security.UserSS;
+import com.schinaman.project.services.Exceptions.AuthorizationException;
 import com.schinaman.project.services.Exceptions.ObjectNotFoundException;
 
 
@@ -73,5 +79,18 @@ public class OrderService {
 		itemOrderRepository.saveAll(obj.getItems());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	
+	public Page<Order> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if (user==null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		PageRequest pageRequest = PageRequest.of(page , linesPerPage, Direction.valueOf(direction), orderBy);
+		Client client = clientService.findById(user.getId());
+		return repo.findByClient(client, pageRequest);
+	
 	}
 }
