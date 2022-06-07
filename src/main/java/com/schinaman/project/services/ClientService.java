@@ -17,10 +17,13 @@ import com.schinaman.project.entities.Address;
 import com.schinaman.project.entities.City;
 import com.schinaman.project.entities.Client;
 import com.schinaman.project.entities.Telephone;
+import com.schinaman.project.entities.enums.Profile;
 import com.schinaman.project.entities.enums.TypeClient;
 import com.schinaman.project.repositories.AddressRepository;
 import com.schinaman.project.repositories.ClientRepository;
 import com.schinaman.project.repositories.TelephoneRepository;
+import com.schinaman.project.security.UserSS;
+import com.schinaman.project.services.Exceptions.AuthorizationException;
 import com.schinaman.project.services.Exceptions.DataIntegrityException;
 import com.schinaman.project.services.Exceptions.ObjectNotFoundException;
 
@@ -45,6 +48,12 @@ public class ClientService {
 	}
 	
 	public Client findById (Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));
