@@ -14,10 +14,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Getter
 public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
+	@Getter
+	private Integer id;
+	private String email;
+	private String senha;
+	private Collection<? extends GrantedAuthority> authorities;
 	
 	public UserSS(Integer id, String email, String senha, Set<Profile> profiles) {
 		super();
@@ -25,14 +29,7 @@ public class UserSS implements UserDetails {
 		this.email = email;
 		this.senha = senha;
 		this.authorities = profiles.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
-	}
-	
-	
-	private Integer id;
-	private String email;
-	private String senha;
-	private Collection<? extends GrantedAuthority> authorities;
-	
+	}	
 	
 	
 	@Override
