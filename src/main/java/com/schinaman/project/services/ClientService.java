@@ -74,6 +74,22 @@ public class ClientService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));
 	}
 	
+	public Client findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+	
+		Client obj = repo.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Client.class.getName());
+		}
+		return obj;
+	}
+	
+	
+	
 	public Client update(Client obj) {
 		Client newObj = findById(obj.getId());
 		updateData(newObj, obj);

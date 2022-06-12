@@ -39,6 +39,12 @@ public class ClientResource {
 		return ResponseEntity.ok(obj);
 	}
 
+	@RequestMapping(value="/email", method=RequestMethod.GET)
+	public ResponseEntity<Client> find(@RequestParam(value="value") String email) {
+		Client obj = service.findByEmail(email);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
  	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDto) { //@Valid intercepta a bean Validation que vem do DTO; aula 39
