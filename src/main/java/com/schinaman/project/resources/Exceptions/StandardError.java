@@ -12,9 +12,11 @@ import lombok.Setter;
 public class StandardError implements Serializable{
 	private static final long serialVersionUID = -5024800428084467532L;
 	
+	private Long timestamp;
 	private Integer status;
-	private String msg;
-	private Long timeStamp;
+	private String error;
+	private String message;
+	private String path;
 	
-	
+
 }
