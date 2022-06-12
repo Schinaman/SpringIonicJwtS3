@@ -30,7 +30,7 @@ public class S3Service {
 	public URI uploadFile(MultipartFile multipartFile) {
 		try {
 			String fileName = multipartFile.getOriginalFilename();
-			InputStream is = multipartFile.getInputStream();
+			InputStream is = multipartFile.getInputStream(); //encapsula a leitura do arquivo
 			String contentType = multipartFile.getContentType();
 			return uploadFile(is, fileName, contentType);
 		} catch (IOException e) {

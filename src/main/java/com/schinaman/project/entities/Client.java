@@ -69,7 +69,6 @@ public class Client implements Serializable {
 	@CollectionTable(name="PROFILES")
 	private Set<Integer> profiles = new HashSet<>();
 	
-	private String imageUrl;
 	
 	public Client() {
 		addProfile(Profile.CLIENT);
