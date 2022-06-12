@@ -10,17 +10,13 @@ import com.schinaman.project.services.S3Service;
 @SpringBootApplication
 public class ProjectApplication implements CommandLineRunner {
 	
-	@Autowired
-	private S3Service s3Service;
-
-	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		s3Service.uploadFile("C:\\Users\\PC - 2.0\\Downloads\\karasu.jpg");
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.schinaman.project.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.schinaman.project.dto.ClientDTO;
 import com.schinaman.project.dto.ClientNewDTO;
@@ -42,6 +44,8 @@ public class ClientService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
+	@Autowired
+	private S3Service s3Service;
 	
 	public List<Client> findAll(){
 		return repo.findAll();
@@ -117,6 +121,11 @@ public class ClientService {
 	private void updateData(Client newObj, Client obj) {
 		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
+	}
+	
+	
+	public URI uploadProfilePicture (MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }
 
