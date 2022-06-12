@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	//permitido apenas para leitura (não consigo dar post ou delete nos produtos)
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/products/**",
-			"/categories/**"
+			"/categories/**",
+			"/states/**"
 	};
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
